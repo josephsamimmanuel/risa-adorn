@@ -44,7 +44,7 @@ img, video, canvas, svg { max-width: 100%; height: auto; }
     body { font-size: 14px; }
     .container { padding-left: 12px !important; padding-right: 12px !important; }
     h1, .hero-title { font-size: clamp(1.75rem, 7vw, 2.5rem) !important; }
-    button, .btn, a.btn {
+    button:not(.hamburger):not(.add-cart):not(.tab), .btn, a.btn {
         min-height: 44px;
         padding: 10px 16px !important;
         font-size: 14px !important;
@@ -95,10 +95,10 @@ img, video, canvas, svg { max-width: 100%; height: auto; }
       <a href="https://wa.me/918778161826?text=Hi%20Risa%20Adorn%2C%20I%20would%20like%20to%20enroll." class="buy-now">Enroll Now</a>
     </nav>
     <div class="header-icons">
-      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-      <i class="fa-solid fa-user" aria-hidden="true"></i>
-      <div class="icon-badge"><i class="fa-solid fa-heart"></i><span>0</span></div>
-      <div class="icon-badge"><i class="fa-solid fa-bag-shopping"></i><span>0</span></div>
+      <i class="fa-solid fa-magnifying-glass icon-desktop" aria-hidden="true"></i>
+      <i class="fa-solid fa-user icon-desktop" aria-hidden="true"></i>
+      <div class="icon-badge icon-desktop"><i class="fa-solid fa-heart"></i><span></span></div>
+      <div class="icon-badge icon-cart"><i class="fa-solid fa-bag-shopping"></i><span></span></div>
       <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
