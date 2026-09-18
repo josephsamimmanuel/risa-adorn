@@ -413,7 +413,7 @@ a.icon-badge{color:inherit}
 
 /* ---- Footer ---- */
 .footer{background:#1f1f25;color:#cfcfd6;padding:70px 0 25px}
-.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:50px;align-items:start}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:50px;align-items:start}
 .footer .logo.logo-light{
   color:#fff;
   display:inline-flex;
@@ -443,6 +443,12 @@ a.icon-badge{color:inherit}
 }
 .footer-inner > div > a:not(.logo):hover{color:var(--primary);padding-left:6px}
 .footer-bottom{margin-top:50px;padding-top:24px;border-top:1px solid #2a2a32;text-align:center;font-size:13px;color:#7a7a82}
+.footer-credit{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  color:#7a7a82;transition:.2s;
+}
+.footer-credit:hover{color:var(--primary)}
+.footer-credit i{font-size:15px}
 
 /* ---- Scroll to top ---- */
 .to-top{

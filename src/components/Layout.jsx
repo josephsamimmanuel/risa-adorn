@@ -189,34 +189,34 @@ export default function Layout() {
             <p>Where passion meets profession. Handmade silk-thread bangles and from-home courses, crafted in Tenkasi.</p>
             <div className="socials">
               <a href="https://www.instagram.com/risa_adorn?utm_source=qr&stkn=MTVzcWV1NGh3dGJzZQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-              <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#" aria-label="Pinterest"><i className="fa-brands fa-pinterest"></i></a>
               <a href="https://wa.me/918778161826" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
             </div>
           </div>
           <div>
-            <h5>Shop</h5>
-            <Link to="/products">All Bangles</Link>
-            <Link to="/#about">Bridal Pre-Booking</Link>
-            <Link to="/products">Hair Accessories</Link>
-            <a href="https://wa.me/918778161826?text=Hi%20Risa%20Adorn%2C%20I%20want%20a%20custom%20design.">Custom Designs</a>
+            <h5>Explore</h5>
+            <Link to="/">Home</Link>
+            <Link to="/products">Products</Link>
+            <Link to="/courses">Courses</Link>
+            <Link to="/#about">About</Link>
+            <Link to="/#cta">Contact</Link>
           </div>
           <div>
-            <h5>Academy</h5>
-            <Link to="/courses">Bangle Course</Link>
-            <Link to="/courses">Invisible Chain</Link>
-            <Link to="/courses">Hair Accessories Course</Link>
-            <Link to="/courses">Demo Class ₹29</Link>
-          </div>
-          <div>
-            <h5>Support</h5>
+            <h5>Contact</h5>
             <a href="https://wa.me/918778161826">WhatsApp 87781 61826</a>
-            <Link to="/#about">Tenkasi Studio</Link>
-            <Link to="/#cta">FAQ</Link>
-            <Link to="/#cta">Privacy</Link>
+            <a href="https://wa.me/918778161826?text=Hi%20Risa%20Adorn%2C%20I%20would%20like%20to%20enroll.">Enroll Now</a>
           </div>
         </div>
-        <div className="footer-bottom container">© 2026 Risa Adorn. All rights reserved. Handmade with love in Tenkasi.</div>
+        <div className="footer-bottom container">
+          <a
+            className="footer-credit"
+            href="https://www.instagram.com/jjcreation.studio/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Designed and developed by JJ Creations on Instagram"
+          >
+            Designed and developed by JJ Creation <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+        </div>
       </footer>
 
       <a className="wa-fab" href="https://wa.me/918778161826?text=Hi%20Risa%20Adorn%2C%20I%20would%20like%20to%20know%20about%20silk-thread%20bangles%20%2F%20courses." aria-label="Chat on WhatsApp">
