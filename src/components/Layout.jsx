@@ -157,7 +157,7 @@ export default function Layout() {
           </Link>
           <nav className={`nav${navOpen ? ' open' : ''}`} id="nav">
             <Link to="/" className={navClass('home')} onClick={closeNav}>Home</Link>
-            <Link to="/products" className={navClass('shop')} onClick={closeNav}>Shop</Link>
+            <Link to="/products" className={navClass('shop')} onClick={closeNav}>Products</Link>
             <Link to="/courses" className={navClass('courses')} onClick={closeNav}>Courses</Link>
             <Link to="/#about" className={navClass('about')} onClick={closeNav}>About</Link>
             <Link to="/#cta" className={navClass('cta')} onClick={closeNav}>Contact</Link>
