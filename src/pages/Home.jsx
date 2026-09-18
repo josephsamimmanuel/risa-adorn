@@ -54,37 +54,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="features" id="features">
+      <section className="flavors" id="shop">
         <div className="container">
           <div className="section-head">
-            <span className="script">Where Passion Meets Profession</span>
-            <h2>Learn, Create &amp; Earn With <span className="accent">Every Thread</span></h2>
+            <span className="script">Made with passion</span>
+            <h2>Jewels That <span className="accent">Steal</span> The Show</h2>
+            <div className="tabs-bar">
+              <button className={`tab tab-all${activeTab === 'all' ? ' active' : ''}`} type="button" onClick={() => setTab('all')}>All Products</button>
+              <div className="tabs" id="tabs">
+                <button className={`tab${activeTab === 'bangles' ? ' active' : ''}`} type="button" onClick={() => setTab('bangles')}>Bangles</button>
+                <button className={`tab${activeTab === 'accessories' ? ' active' : ''}`} type="button" onClick={() => setTab('accessories')}>Accessories</button>
+              </div>
+            </div>
           </div>
-          <div className="features-grid">
-            <article className="feature-card reveal-up">
-              <div className="feature-blob blob-pink"></div>
-              <img src={asset('feature1.webp')} alt="Hands making a silk-thread bangle" />
-              <span className="feature-tag">Learn From Home</span>
-              <h3>Skill Academy</h3>
-              <p>Pre-recorded lessons, practice sessions, and a WhatsApp doubt-clearance group — at your pace.</p>
-              <Link to="/courses" className="link">See Courses <i className="fa-solid fa-arrow-right"></i></Link>
-            </article>
-            <article className="feature-card reveal-up" style={{ '--d': '.15s' }}>
-              <div className="feature-blob blob-green"></div>
-              <img src={asset('feature2.webp')} alt="Bride wearing Risa Adorn bridal bangles" />
-              <span className="feature-tag">Bridal &amp; Engagement</span>
-              <h3>Handmade Atelier</h3>
-              <p>Pre-book silk-thread sets for your special day — exclusive designs, comfort fit, made with love.</p>
-              <Link to="/#about" className="link">Pre-Book <i className="fa-solid fa-arrow-right"></i></Link>
-            </article>
-            <article className="feature-card reveal-up" style={{ '--d': '.3s' }}>
-              <div className="feature-blob blob-orange"></div>
-              <img src={asset('feature3.webp')} alt="Handmade hair accessories" />
-              <span className="feature-tag">Learn · Create · Earn</span>
-              <h3>Skill to Income</h3>
-              <p>Make hair accessories and jewellery from home. Skill today, success tomorrow.</p>
-              <Link to="/products" className="link">Shop More <i className="fa-solid fa-arrow-right"></i></Link>
-            </article>
+          <CatalogGrid items={PRODUCTS} activeTab={activeTab} addedIds={addedIds} onAddCart={onAddCart} gridId="homeGrid" />
+          <div className="shop-more-row">
+            <Link to="/products" className="btn btn-ghost">View all products <i className="fa-solid fa-arrow-right"></i></Link>
           </div>
         </div>
       </section>
@@ -127,26 +112,6 @@ export default function Home() {
             <div className="summer-circle"></div>
             <img src={asset('summer.webp')} alt="Instructor demonstrating silk-thread bangle making" className="float" />
             <span className="bubble b1"></span><span className="bubble b2"></span><span className="bubble b3"></span>
-          </div>
-        </div>
-      </section>
-
-      <section className="flavors" id="shop">
-        <div className="container">
-          <div className="section-head">
-            <span className="script">Made with passion</span>
-            <h2>Jewels That <span className="accent">Steal</span> The Show</h2>
-            <div className="tabs-bar">
-              <button className={`tab tab-all${activeTab === 'all' ? ' active' : ''}`} type="button" onClick={() => setTab('all')}>All Products</button>
-              <div className="tabs" id="tabs">
-                <button className={`tab${activeTab === 'bangles' ? ' active' : ''}`} type="button" onClick={() => setTab('bangles')}>Bangles</button>
-                <button className={`tab${activeTab === 'accessories' ? ' active' : ''}`} type="button" onClick={() => setTab('accessories')}>Accessories</button>
-              </div>
-            </div>
-          </div>
-          <CatalogGrid items={PRODUCTS} activeTab={activeTab} addedIds={addedIds} onAddCart={onAddCart} gridId="homeGrid" />
-          <div className="shop-more-row">
-            <Link to="/products" className="btn btn-ghost">View all products <i className="fa-solid fa-arrow-right"></i></Link>
           </div>
         </div>
       </section>
