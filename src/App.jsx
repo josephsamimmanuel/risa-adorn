@@ -38,42 +38,6 @@ const CATALOG = [
     price: '₹799',
   },
   {
-    category: 'courses',
-    bg: 'bg-pink',
-    img: 'images/flavor1.webp',
-    alt: 'Colourful silk-thread bangles for the professional course',
-    brand: 'Registration fees only',
-    title: 'Professional Bangle Making',
-    price: '₹799',
-  },
-  {
-    category: 'courses',
-    bg: 'bg-rose',
-    img: 'images/flavor2.webp',
-    alt: 'Gold invisible-chain necklace',
-    brand: 'Master course',
-    title: 'Invisible Chain Master',
-    price: '₹299',
-  },
-  {
-    category: 'courses',
-    bg: 'bg-peach',
-    img: 'images/flavor3.webp',
-    alt: 'Handmade hair bows and clips',
-    brand: 'Bows, clips & florals',
-    title: 'Hair Accessories Course',
-    price: '₹149',
-  },
-  {
-    category: 'courses',
-    bg: 'bg-cream',
-    img: 'images/summer.webp',
-    alt: 'Instructor demonstrating silk-thread bangle making',
-    brand: '1-hour beginner intro',
-    title: 'Live Demo Class',
-    price: '₹29',
-  },
-  {
     category: 'accessories',
     bg: 'bg-pink',
     img: 'images/flavor2.webp',
@@ -109,7 +73,61 @@ const CATALOG = [
     title: 'Custom Hair Accessory',
     price: '₹199',
   },
+  {
+    category: 'courses',
+    bg: 'bg-pink',
+    img: 'images/flavor1.webp',
+    alt: 'Colourful silk-thread bangles for the professional course',
+    brand: 'Registration fees only',
+    title: 'Professional Bangle Making',
+    price: '₹799',
+  },
+  {
+    category: 'courses',
+    bg: 'bg-rose',
+    img: 'images/flavor2.webp',
+    alt: 'Gold invisible-chain necklace',
+    brand: 'Master course',
+    title: 'Invisible Chain Master',
+    price: '₹299',
+  },
+  {
+    category: 'courses',
+    bg: 'bg-peach',
+    img: 'images/flavor3.webp',
+    alt: 'Handmade hair bows and clips',
+    brand: 'Bows, clips & florals',
+    title: 'Hair Accessories Course',
+    price: '₹149',
+  },
+  {
+    category: 'courses',
+    bg: 'bg-cream',
+    img: 'images/summer.webp',
+    alt: 'Instructor demonstrating silk-thread bangle making',
+    brand: '1-hour beginner intro',
+    title: 'Live Demo Class',
+    price: '₹29',
+  },
 ]
+
+const WA_NUMBER = '918778161826'
+const waLink = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`
+
+const productEnquiryText = (item) =>
+  `Hi Risa Adorn, I would like to enquire about ${item.title} priced at ${item.price}.`
+
+const cartEnquiryText = (items) => {
+  if (!items.length) {
+    return 'Hi Risa Adorn, I would like to place an order. Please share the latest catalogue and prices.'
+  }
+  const lines = items.map((item) =>
+    item.qty > 1
+      ? `• ${item.title} x${item.qty} — ${item.price}`
+      : `• ${item.title} — ${item.price}`
+  )
+  return `Hi Risa Adorn, I would like to place an order.\n\n${lines.join('\n')}`
+}
 
 function App() {
   const [loaderHidden, setLoaderHidden] = useState(false)
@@ -118,7 +136,7 @@ function App() {
   const [navOpen, setNavOpen] = useState(false)
   const [activeNav, setActiveNav] = useState('home')
   const [activeTab, setActiveTab] = useState('bangles')
-  const [cartCount, setCartCount] = useState(0)
+  const [cart, setCart] = useState([])
   const [addedIds, setAddedIds] = useState({})
   const [subscribed, setSubscribed] = useState(false)
   const [leaveActive, setLeaveActive] = useState(false)
@@ -201,7 +219,7 @@ function App() {
     }
     const cards = document.querySelectorAll('#flavorGrid .flavor-card')
     cards.forEach((c, i) => {
-      const match = c.dataset.category === activeTab
+      const match = activeTab === 'all' || c.dataset.category === activeTab
       if (match) {
         c.style.animation = 'none'
         void c.offsetHeight
@@ -250,19 +268,31 @@ function App() {
     }
   }, [setTab])
 
-  const onAddCart = (e, id) => {
+  const cartCount = cart.reduce((total, item) => total + item.qty, 0)
+  const cartWhatsAppHref = waLink(cartEnquiryText(cart))
+
+  const onAddCart = (e, item) => {
     e.stopPropagation()
-    setAddedIds((prev) => ({ ...prev, [id]: true }))
-    setCartCount((count) => count + 1)
+    const key = `${item.category}-${item.title}`
+    setCart((prev) => {
+      const existing = prev.find((entry) => entry.key === key)
+      if (existing) {
+        return prev.map((entry) =>
+          entry.key === key ? { ...entry, qty: entry.qty + 1 } : entry
+        )
+      }
+      return [...prev, { key, title: item.title, price: item.price, qty: 1 }]
+    })
+    setAddedIds((prev) => ({ ...prev, [key]: true }))
     if (badgeRef.current) {
       badgeRef.current.animate(
         [{ transform: 'scale(1)' }, { transform: 'scale(1.6)' }, { transform: 'scale(1)' }],
         { duration: 400, easing: 'ease-out' }
       )
     }
-    window.clearTimeout(addTimeouts.current[id])
-    addTimeouts.current[id] = window.setTimeout(() => {
-      setAddedIds((prev) => ({ ...prev, [id]: false }))
+    window.clearTimeout(addTimeouts.current[key])
+    addTimeouts.current[key] = window.setTimeout(() => {
+      setAddedIds((prev) => ({ ...prev, [key]: false }))
     }, 1400)
   }
 
@@ -286,8 +316,8 @@ function App() {
             <span><i className="fa-solid fa-location-dot"></i> Tenkasi Studio</span>
             <a href="https://wa.me/918778161826"><i className="fa-brands fa-whatsapp"></i> 87781 61826</a>
           </div>
-          <div className="topbar-center">DEMO CLASS ₹29 · LEARN FROM HOME — <a href="#courses">ENROLL NOW</a></div>
-          <div className="topbar-right"><i className="fa-solid fa-globe"></i> English · தமிழ்</div>
+          <div className="topbar-center">DEMO CLASS ₹29 · LEARN FROM HOME — <a href="https://wa.me/918778161826?text=Hi%20Risa%20Adorn%2C%20I%20would%20like%20to%20enroll." target="_blank" rel="noopener noreferrer">ENROLL NOW</a></div>
+          <div className="topbar-right"><i className="fa-solid fa-globe"></i> English</div>
         </div>
       </div>
 
@@ -306,9 +336,16 @@ function App() {
           </nav>
           <div className="header-icons">
             <i className="fa-solid fa-magnifying-glass icon-desktop" aria-hidden="true"></i>
-            <i className="fa-solid fa-user icon-desktop" aria-hidden="true"></i>
-            <div className="icon-badge icon-desktop"><i className="fa-solid fa-heart"></i><span></span></div>
-            <div className="icon-badge icon-cart"><i className="fa-solid fa-bag-shopping"></i><span ref={badgeRef}>{cartCount > 0 ? cartCount : null}</span></div>
+            <a
+              className="icon-badge icon-cart"
+              href={cartWhatsAppHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Enquire about cart on WhatsApp"
+            >
+              <i className="fa-solid fa-bag-shopping"></i>
+              <span ref={badgeRef}>{cartCount > 0 ? cartCount : null}</span>
+            </a>
             <button className={`hamburger${navOpen ? ' open' : ''}`} id="hamburger" aria-label="Open menu" onClick={() => setNavOpen((open) => !open)}><span></span><span></span><span></span></button>
           </div>
         </div>
@@ -416,34 +453,39 @@ function App() {
           <div className="section-head">
             <span className="script">Made &amp; taught with passion</span>
             <h2>Courses &amp; Jewels That <span className="accent">Steal</span> The Show</h2>
-            <div className="tabs" id="tabs">
-              <button className={`tab${activeTab === 'bangles' ? ' active' : ''}`} data-tab="bangles" type="button" onClick={() => setTab('bangles')}>Bangles</button>
-              <button className={`tab${activeTab === 'courses' ? ' active' : ''}`} data-tab="courses" type="button" onClick={() => setTab('courses')}>Courses</button>
-              <button className={`tab${activeTab === 'accessories' ? ' active' : ''}`} data-tab="accessories" type="button" onClick={() => setTab('accessories')}>Accessories</button>
+            <div className="tabs-bar">
+              <button className={`tab tab-all${activeTab === 'all' ? ' active' : ''}`} data-tab="all" type="button" onClick={() => setTab('all')}>All Products</button>
+              <div className="tabs" id="tabs">
+                <button className={`tab${activeTab === 'bangles' ? ' active' : ''}`} data-tab="bangles" type="button" onClick={() => setTab('bangles')}>Bangles</button>
+                <button className={`tab${activeTab === 'accessories' ? ' active' : ''}`} data-tab="accessories" type="button" onClick={() => setTab('accessories')}>Accessories</button>
+                <button className={`tab${activeTab === 'courses' ? ' active' : ''}`} data-tab="courses" type="button" onClick={() => setTab('courses')}>Courses</button>
+              </div>
             </div>
           </div>
           <div className="flavor-grid" id="flavorGrid">
-            {CATALOG.map((item, index) => (
+            {CATALOG.map((item) => (
               <article
                 key={`${item.category}-${item.title}`}
                 className="flavor-card"
                 data-category={item.category}
-                hidden={item.category !== activeTab}
+                hidden={activeTab !== 'all' && item.category !== activeTab}
               >
                 <div className={`flavor-bg ${item.bg}`}></div>
                 <img src={item.img} alt={item.alt} />
                 <p className="brand">{item.brand}</p>
                 <h4>{item.title}</h4>
                 <span className="price">{item.price}</span>
-                <button
+                <a
                   className="add-cart"
-                  type="button"
-                  aria-label="Add to enquiry"
-                  onClick={(e) => onAddCart(e, index)}
-                  style={addedIds[index] ? { background: '#2ecc71' } : undefined}
+                  href={waLink(productEnquiryText(item))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Enquire about ${item.title} on WhatsApp`}
+                  onClick={(e) => onAddCart(e, item)}
+                  style={addedIds[`${item.category}-${item.title}`] ? { background: '#2ecc71' } : undefined}
                 >
-                  <i className={`fa-solid ${addedIds[index] ? 'fa-check' : 'fa-bag-shopping'}`}></i>
-                </button>
+                  <i className={`fa-solid ${addedIds[`${item.category}-${item.title}`] ? 'fa-check' : 'fa-bag-shopping'}`}></i>
+                </a>
               </article>
             ))}
           </div>
